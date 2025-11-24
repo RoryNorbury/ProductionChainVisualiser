@@ -3,37 +3,35 @@
 		xmlns:vm="using:ProductionChainVisualiser.ViewModels"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="450"
+		mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="360"
 		x:Class="ProductionChainVisualiser.Views.MainWindow"
 		x:DataType="vm:MainWindowViewModel"
 		Icon="/Assets/avalonia-logo.ico"
 		Title="ProductionChainVisualiser"
-		Width="400" Height="450">
+		Width="1280" Height="720">
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
 		to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
-
-
-	<StackPanel>
-		<Border Margin="5" CornerRadius="10" Background="LightBlue">
-			<TextBlock Margin="5"
-					   HorizontalAlignment="Center"
-					   FontSize="24"
-					   Text="Temperature Converter" />
+	<DockPanel>
+		<!-- Top Panel -->
+		<Border Height="60" Background="Gray" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+			<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold">Production Chain Visualiser</TextBlock>
 		</Border>
-		<Grid ShowGridLines="True"  Margin="15"
-			  ColumnDefinitions="120, 100"
-			  RowDefinitions="Auto, Auto, Auto">
-			<Label Grid.Row="0" Grid.Column="0" Margin="10" Name="Celsius">Celsius</Label>
-			<TextBox Grid.Row="0" Grid.Column="1" Margin="0 5" Text="0"/>
-			<Label Grid.Row="1" Grid.Column="0" Margin="10" Name="Fahrenheit">Fahrenheit</Label>
-			<TextBox Grid.Row="1"  Grid.Column="1" Margin="0 5" Text="0"/>
-			<Button Grid.Row="2"  Grid.Column="1" Click="Button_OnClick">Calculate</Button>
-		</Grid>
-	</StackPanel>
+		<!-- Left Panel -->
+		<Border Width="100" Background="Gray" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
+			<StackPanel DataContext="{Binding RecipeNodeViewModel1}" VerticalAlignment="Center" HorizontalAlignment="Center">
+				<Button HorizontalAlignment="Center" Click="AddNode">Add</Button>
+				<Button HorizontalAlignment="Center" Click="RemoveNode">Remove</Button>
+				<TextBlock HorizontalAlignment="Center">2</TextBlock>
+			</StackPanel>
+		</Border>
+		<Border Background="#EEEEEE" BorderBrush="Black" BorderThickness="1">
+			<Canvas>
 
-
+			</Canvas>
+		</Border>
+	</DockPanel>
 </Window>

@@ -10,9 +10,13 @@ namespace ProductionChainVisualiser.Views
         {
             InitializeComponent();
         }
-        private void Button_OnClick(object? sender, RoutedEventArgs e)
+        private void AddNode(object? sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Click!");
+            Debug.WriteLine("Nuh uh");
+        }
+        private void RemoveNode(object? sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Nuh uh");
         }
     }
 }
