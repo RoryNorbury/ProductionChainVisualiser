@@ -1,64 +1,34 @@
-﻿using ProductionChainVisualiser.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ProductionChainVisualiser.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
-using ReactiveUI;
 
 namespace ProductionChainVisualiser.ViewModels
 {
-    public partial class RecipeNodeViewModel : ReactiveObject
+    public partial class RecipeNodeViewModel : ViewModelBase
     {
-        private Point _position;
-        public Point Position
+        public RecipeNodeViewModel(Recipe recipe, double machineCount, double leftCoordinate, double topCoordinate)
         {
-            get { return _position; }
-            set
-            {
-                // part of ReactuiveUI, tells the View that this value has been changed
-                this.RaiseAndSetIfChanged(ref _position, value);
-            }
+            Recipe = recipe;
+            MachineCount = machineCount;
+            _leftCoordinate = leftCoordinate;
+            _topCoordinate = topCoordinate;
         }
-        private Recipe _recipe;
-        public Recipe Recipe
-        {
-            get { return _recipe; }
-            set
-            {
-                // part of ReactuiveUI, tells the View that this value has been changed
-                this.RaiseAndSetIfChanged(ref _recipe, value);
-            }
-        }
-        /// <summary>
-        /// Creates a new blank RecipeNodeViewModel
-        /// </summary>
-        public RecipeNodeViewModel()
-        {
 
-        }
+        public Recipe Recipe { get; set; } = new Recipe();
         /// <summary>
-        /// Creates a new RecipeNodeViewModel from a given RecipeNode
+        /// The number of machines needed to match item demand
         /// </summary>
-        /// <param name="recipeNode">The RecipeNode to load the data from</param>
-        public RecipeNodeViewModel(RecipeNode recipeNode)
-        {
-            Position = recipeNode.Position;
-            Recipe = recipeNode.Recipe;
-        }
-        /// <summary>
-        /// Gets a RecipeNode of this ViewModel
-        /// </summary>
-        /// <returns>The RecipeNode</returns>
-        public RecipeNode GetToDoItem()
-        {
-            return new RecipeNode()
-            {
-                Position = this.Position,
-                Recipe = this.Recipe
-            };
-        }
+        public double MachineCount { get; set; } = 1.0;
+        // Coordinates for displaying the node in the canvas
+        [ObservableProperty]
+        private double _leftCoordinate = 0;
+        [ObservableProperty]
+        private double _topCoordinate  = 0;
+        [ObservableProperty]
+        private double _zIndex = 0;
     }
 }

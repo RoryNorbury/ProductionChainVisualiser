@@ -1,11 +1,15 @@
-﻿using System.Collections.ObjectModel;
+﻿using Avalonia.Controls;
+using CommunityToolkit.Mvvm.Input;
+using ProductionChainVisualiser.Models;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ProductionChainVisualiser.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public partial class MainWindowViewModel : ViewModelBase
     {
-        public RecipeNodeViewModel RecipeNodeViewModel1 { get; } = new RecipeNodeViewModel();
-        public ObservableCollection<RecipeNodeViewModel> RecipeNodes { get; } = new ObservableCollection<RecipeNodeViewModel>();
+        public MainWindowViewModel() { }
+        public ChartWindowViewModel ChartWindowViewModel { get; } = new ChartWindowViewModel();
 
     }
 }

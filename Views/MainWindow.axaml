@@ -1,14 +1,17 @@
 <Window xmlns="https://github.com/avaloniaui"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:i="using:Avalonia.Xaml.Interactivity"
+		xmlns:behaviors="using:Avalonia.Xaml.Interactions.Core"
 		xmlns:vm="using:ProductionChainVisualiser.ViewModels"
+		xmlns:model="using:ProductionChainVisualiser.Models"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="360"
+		mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720"
+		Width="1280" Height="720"
 		x:Class="ProductionChainVisualiser.Views.MainWindow"
 		x:DataType="vm:MainWindowViewModel"
 		Icon="/Assets/avalonia-logo.ico"
-		Title="ProductionChainVisualiser"
-		Width="1280" Height="720">
+		Title="ProductionChainVisualiser">
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
@@ -17,21 +20,53 @@
 	</Design.DataContext>
 	<DockPanel>
 		<!-- Top Panel -->
-		<Border Height="60" Background="Gray" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+		<Border Height="80" Background="#1a1a1a" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
 			<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold">Production Chain Visualiser</TextBlock>
 		</Border>
 		<!-- Left Panel -->
-		<Border Width="100" Background="Gray" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
-			<StackPanel DataContext="{Binding RecipeNodeViewModel1}" VerticalAlignment="Center" HorizontalAlignment="Center">
-				<Button HorizontalAlignment="Center" Click="AddNode">Add</Button>
-				<Button HorizontalAlignment="Center" Click="RemoveNode">Remove</Button>
+		<Border Width="120" Background="#1a1a1a" BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
+			<StackPanel DataContext="{Binding ChartWindowViewModel}" VerticalAlignment="Center" HorizontalAlignment="Center">
+				<Button HorizontalAlignment="Center" Command="{Binding AddNodeCommand}">Add</Button>
+				<Button HorizontalAlignment="Center">Remove</Button>
 				<TextBlock HorizontalAlignment="Center">2</TextBlock>
 			</StackPanel>
 		</Border>
-		<Border Background="#EEEEEE" BorderBrush="Black" BorderThickness="1">
-			<Canvas>
+		<Border Background="#202020" BorderBrush="Black" BorderThickness="1">
+			<ItemsControl ItemsSource="{Binding ChartWindowViewModel.RecipeNodes}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Canvas>
+							<Border Background="#303030" BorderBrush="Black" BorderThickness="1"
+									Canvas.Left="{Binding LeftCoordinate}"
+									Canvas.Top="{Binding TopCoordinate}"
+									ZIndex="{Binding ZIndex}"
+									Width="150" Height="100"
+									PointerPressed="OnItemPointerPressed"
+									PointerMoved="OnItemPointerMoved"
+									PointerReleased="OnItemPointerReleased">
+								<StackPanel>
 
-			</Canvas>
+									<TextBlock Text="{Binding Recipe.Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+									<ItemsControl ItemsSource="{Binding Recipe.Inputs}" Margin="5" VerticalAlignment="Top">
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<TextBlock FontSize="10" Text="{Binding Display}"/>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+									<ItemsControl ItemsSource="{Binding Recipe.Outputs}" Margin="5" VerticalAlignment="Top">
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<TextBlock FontSize="10" Text="{Binding Display}"/>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+									</ItemsControl>
+								</StackPanel>
+							</Border>
+						</Canvas>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 		</Border>
 	</DockPanel>
 </Window>
