@@ -31,39 +31,46 @@
 				<TextBlock HorizontalAlignment="Center">2</TextBlock>
 			</StackPanel>
 		</Border>
+		<!-- Main Chart Area -->
 		<Border Background="#202020" BorderBrush="Black" BorderThickness="1">
 			<ItemsControl ItemsSource="{Binding ChartWindowViewModel.RecipeNodes}">
+				<!-- Main canvas -->
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<Canvas Background="#202020"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<!-- Binds node position -->
+				<ItemsControl.Styles>
+					<Style Selector="ContentPresenter" x:DataType="vm:RecipeNodeViewModel">
+						<Setter Property="Canvas.Left" Value="{Binding LeftCoordinate}"/>
+						<Setter Property="Canvas.Top" Value="{Binding TopCoordinate}"/>
+						<Setter Property="Canvas.ZIndex" Value="{Binding ZIndex}"/>
+					</Style>
+				</ItemsControl.Styles>
+				<!-- Template that defines how recipenodes are displayed -->
 				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<Canvas>
-							<Border Background="#303030" BorderBrush="Black" BorderThickness="1"
-									Canvas.Left="{Binding LeftCoordinate}"
-									Canvas.Top="{Binding TopCoordinate}"
-									ZIndex="{Binding ZIndex}"
-									Width="150" Height="100"
-									PointerPressed="OnItemPointerPressed"
-									PointerMoved="OnItemPointerMoved"
-									PointerReleased="OnItemPointerReleased">
-								<StackPanel>
-
-									<TextBlock Text="{Binding Recipe.Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-									<ItemsControl ItemsSource="{Binding Recipe.Inputs}" Margin="5" VerticalAlignment="Top">
-										<ItemsControl.ItemTemplate>
-											<DataTemplate>
-												<TextBlock FontSize="10" Text="{Binding Display}"/>
-											</DataTemplate>
-										</ItemsControl.ItemTemplate>
-									</ItemsControl>
-									<ItemsControl ItemsSource="{Binding Recipe.Outputs}" Margin="5" VerticalAlignment="Top">
-										<ItemsControl.ItemTemplate>
-											<DataTemplate>
-												<TextBlock FontSize="10" Text="{Binding Display}"/>
-											</DataTemplate>
-										</ItemsControl.ItemTemplate>
-									</ItemsControl>
-								</StackPanel>
-							</Border>
-						</Canvas>
+					<DataTemplate x:DataType="vm:RecipeNodeViewModel">
+						<Border Background="#303030" BorderBrush="Black" BorderThickness="1"
+								PointerPressed="OnItemPointerPressed"
+								PointerMoved="OnItemPointerMoved"
+								PointerReleased="OnItemPointerReleased">
+							<StackPanel Orientation="Vertical">
+								<!-- Defines node layout -->
+								<TextBlock Text="{Binding Recipe.Name}" FontWeight="Bold" Padding="0, 12, 0, 4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+								<!-- Inputs layout -->
+								<Separator/>
+								<TextBlock Padding="0, 0, 0, 4" VerticalAlignment="Center" HorizontalAlignment="Center">Inputs</TextBlock>
+								<DataGrid ItemsSource="{Binding Recipe.Inputs}"
+										  HeadersVisibility="None"
+										  GridLinesVisibility="All">
+									<DataGrid.Columns>
+										<DataGridTextColumn Binding="{Binding ItemName}" FontSize="10" IsReadOnly="True"/>
+										<DataGridTextColumn Binding="{Binding Quantity}" FontSize="10" />
+									</DataGrid.Columns>
+								</DataGrid>
+							</StackPanel>
+						</Border>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>

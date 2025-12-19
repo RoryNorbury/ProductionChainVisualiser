@@ -15,6 +15,5 @@ namespace ProductionChainVisualiser.Models
             ItemName = itemName;
             Quantity = quantity;
         }
-        public string Display { get { return $"{ItemName} x {Quantity}"; } }
     }
 }

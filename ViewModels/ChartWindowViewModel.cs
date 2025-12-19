@@ -32,7 +32,8 @@ namespace ProductionChainVisualiser.ViewModels
             new List<ItemQuantity> // Inputs
             {
                 new ItemQuantity("Iron Ore", 10),
-                new ItemQuantity("Coal", 5)
+                new ItemQuantity("Coal", 5),
+                new ItemQuantity("A usefully elongated name", 3)
             },
             new List<ItemQuantity> // Outputs
             {
