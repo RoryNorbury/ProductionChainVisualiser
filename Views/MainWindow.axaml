@@ -63,7 +63,8 @@
 								<TextBlock Padding="0, 0, 0, 4" VerticalAlignment="Center" HorizontalAlignment="Center">Inputs</TextBlock>
 								<DataGrid ItemsSource="{Binding Recipe.Inputs}"
 										  HeadersVisibility="None"
-										  GridLinesVisibility="All">
+										  GridLinesVisibility="All"
+										  Focusable="False">
 									<DataGrid.Columns>
 										<DataGridTextColumn Binding="{Binding ItemName}" FontSize="10" IsReadOnly="True"/>
 										<DataGridTextColumn Binding="{Binding Quantity}" FontSize="10" />
